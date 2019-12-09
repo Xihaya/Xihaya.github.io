@@ -1,0 +1,49 @@
+@charset "utf-8";
+/* CSS Document */
+*{
+	margin:0px;
+	padding:0px;
+}
+#main{
+	clear:both;
+	width:980px;
+	margin:0px auto;
+	padding-top:50px;
+}
+#main div{
+	height:280px;
+	float:left;
+	margin-bottom:20px;
+}
+#main img{
+	display:block;
+	float:left;
+	margin-right:10px;
+}
+#main p{
+	float:left;
+	width:600px;
+	line-height:150%;
+}
+#main h2{
+	float:left;
+}
+#main h2 span{
+	background:url(../images/icon1.png) no-repeat center;
+	display:inline-block;
+	width:62px;
+	height:40px;
+	color:#FFF;
+	padding-top:5px;
+}
+#foot{
+	clear:both;
+	width:100%;
+	text-align:center;
+	height:60px;
+	line-height:60px;
+	background-color:#333;
+}
+#foot p{
+	color:#FFF;
+}

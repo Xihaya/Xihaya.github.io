@@ -1,0 +1,108 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?131y8i');
+  src:  url('../fonts/icomoon.eot?131y8i#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?131y8i') format('truetype'),
+    url('../fonts/icomoon.woff?131y8i') format('woff'),
+    url('../fonts/icomoon.svg?131y8i#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+#main{
+	background-color:#CCC;
+	width:100%;
+	clear:both;
+}
+#main_top{
+	width:980px;
+	margin:0px auto;
+	padding:0px 30px 0px 30px;
+	height:307px;
+}
+#line{
+	width:100px;
+	height:1px;
+	background-color:#CF0;
+	margin-bottom:20px;
+}
+#main_top_left{
+	background-color:#06F;
+	color:#FFF;
+	padding-top:50px;
+	padding-left:20px;
+	width:350px;
+	height:257px;
+	float:left;
+}
+#main_top_left h1{
+	font-weight:700;
+	margin-bottom:10px;
+}
+#main_top_left p{
+	margin-bottom:10px;
+	line-height:150%;
+}
+#main_top_left span{
+	font-family: 'icomoon';
+	font-size:30px;
+	margin-bottom:10px;
+	display:block;
+}
+#main_top_right{
+	float:left;
+	width:550px;
+	height:307px;
+}
+#main_bottom{
+	width:980px;
+	margin:0px auto;
+	
+}
+#main_bottom_left{
+	background-color:#99C;
+	color:#FFF;
+	padding-top:20px;
+	padding-left:20px;
+	padding-right:20px;
+	width:330px;
+	height:277px;
+	float:left;
+}
+#main_bottom_mid{
+	background-color:#39F;
+	color:#FFF;
+	padding-top:20px;
+	padding-left:20px;
+	padding-right:20px;
+	width:210px;
+	height:277px;
+	float:left;
+}
+#main_bottom_right{
+	background-color:#99C;
+	color:#FFF;
+	padding-top:20px;
+	padding-left:20px;
+	padding-right:20px;
+	width:260px;
+	height:277px;
+	float:left;
+}
+#main_bottom p{
+	text-indent:2em;
+	line-height:135%;
+}
+#foot{
+	clear:both;
+	width:100%;
+	text-align:center;
+	height:60px;
+	line-height:60px;
+	background-color:#333;
+}
+#foot p{
+	color:#FFF;
+}
