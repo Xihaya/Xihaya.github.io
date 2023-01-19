@@ -69,6 +69,7 @@
     },
     methods: {
       show(){
+        if(this.possibleArr.length > 10000) return;
         this.showPossibleArr = true;
         this.interimArr = this.possibleArr;
       },

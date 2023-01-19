@@ -3,6 +3,7 @@ body {
   min-height: 100vh;
 }
 
+
 #app {
   margin: auto;
   background-color: #fff;
@@ -165,7 +166,38 @@ body {
     transform: translate(0);
   }
 }
-.rightside ul{
+.rightside ul {
   margin-top: 10px;
   letter-spacing: 2px;
+  background-color: #e9e6e6;
+  padding: 20px;
+}
+
+
+
+@media screen and (width <= 900px) {
+  #app {
+    flex-flow: column nowrap;
+    width: 100vw;
+  }
+
+  .leftside{
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .shapes img {
+    width: 100%;
+  }
+
+  .input {
+    margin: 5px;
+    background-color: #fff;
+    border-radius: 0.5em;
+    border: 1px solid #dcdfe6;
+    padding: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
 }
