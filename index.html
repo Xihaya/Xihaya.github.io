@@ -1,48 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>欢迎光临</title>
-    <style type="text/css">
-    		*{
-			margin:0px;
-			padding:0px;
-		}
-		#wrap{
-			background:url(images/sy.jpg) center no-repeat;
-			
-			text-align:center;
-			color:#FFF;
-		}
-		h1{
-			font-size:50px;
-			margin-top:50px;
-		}
-		p{
-			margin-top:50px;
-		}
-		button{
-			background-color:#FFF;
-			color:#06F;
-			width:100px;
-			height:40px;
-			border:solid 1px transparent;
-		}
-		button:hover{
-			background-color:#06F;
-			color:#FFF;
-			width:100px;
-			height:40px;
-			border:solid 1px #06F;
-		}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maxminscale=1.0">
+  <title>Title</title>
+  <script src="./js/useData.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./styles/base.css">
+  <link rel="stylesheet" type="text/css" href="./styles/index.css">
 </head>
+
 <body>
-	<div id="wrap">
-    	<h1>欢迎光临</h1>
-        <p>愿你能在成都找到乐趣</p>
-        <p>如果你准备好了的话，就请点击下方按钮吧~</p>
-        <button onClick="window.open('html/index.html')">进入</button>
+  <div id="app">
+    <div class="leftside">
+      <div class="shapes">
+        <img src="./方糖形状参照表.png" alt="">
+      </div>
+
+      <div class="counts">
+        <div class="input" v-for="(item,index) in shapes" ::key="index">
+          <label>{{item.name}}:</label>
+          <span @click="decrease(item)">-</span>
+          <div style="margin: 0 10px;">{{item.count}}</div>
+          <span @click="increase(item)">+</span>
+        </div>
+      </div>
     </div>
+
+
+
+    <div class="rightside">
+      <span>当前已选择形状能拼好的数量：{{possibleNum}}</span>
+      <br>
+      <button @click="show">
+        show
+      </button>
+      <button @click="showPossibleArr = false" style="margin: 30px;">
+        close
+      </button>
+
+      <ul v-show="showPossibleArr">
+        <li v-for="(item,index) in interimArr" :key="'s'+index">
+          {{item.toString()}}
+        </li>
+      </ul>
+    </div>
+  </div>
 </body>
+
+<script>
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        shapes: [],
+        possibleArr: [],
+        showPossibleArr: false,
+        interimArr:[]
+      }
+    },
+    beforeMount() {
+      // 初始化
+      for (let i = 1; i <= 19; i++) {
+        this.shapes.push({ name: `形状${i}`, count: 0, desc: i + '' })
+      }
+    },
+    methods: {
+      show(){
+        this.showPossibleArr = true;
+        this.interimArr = this.possibleArr;
+      },
+      filterUseData: _.debounce(function() {
+        let interimArr = [];
+        this.shapes.forEach(shape => {
+          if (shape.count > 0) {
+            interimArr = interimArr.concat(useData.filter(item => this.arrIncludeElementCount(item, shape.desc) >= shape.count))
+          }
+        })
+        this.possibleArr = interimArr;
+      },600),
+      increase(shape) {
+        if (this.selectedShapesNum() >= 9) {
+          return
+        } else {
+          shape.count++;
+        }
+      },
+      decrease(shape) {
+        if (this.selectedShapesNum() <= 0) {
+          return
+        } else if(shape.count > 0) {
+          shape.count--;
+        }
+      },
+      // 当前已选择的形状数量
+      selectedShapesNum() {
+        let i = 0;
+        this.shapes.forEach(item => {
+          i = i + item.count;
+        });
+        return i;
+      },
+      arrIncludeElementCount(arr, element) {
+        let count = 0;
+        arr.forEach(item => {
+          if (item == element) count++;
+        });
+        return count;
+      }
+    },
+    watch: {
+      shapes: {
+        deep: true,
+        immediate: false,
+        handler() {
+          if (this.selectedShapesNum() > 0) {
+            this.filterUseData();
+          } else {
+            this.possibleArr = [];
+          }
+        }
+      }
+    },
+    computed: {
+      possibleNum() {
+        return this.possibleArr.length;
+      }
+    }
+  })
+</script>
+
 </html>
