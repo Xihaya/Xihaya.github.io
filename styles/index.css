@@ -1,12 +1,12 @@
 body {
   position: relative;
   min-height: 100vh;
+  background-color: #f9f9f9;
 }
-
 
 #app {
   margin: auto;
-  background-color: #fff;
+  background-color: #f9f9f9;
   display: flex;
   flex-flow: row nowrap;
 }
@@ -37,7 +37,9 @@ body {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  justify-content: space-around;
 }
+
 .input label {
   display: inline-block;
   width: 50px;
@@ -54,9 +56,10 @@ body {
   width: 30px;
   height: 100%;
   text-align: center;
-  color: #606266 !important;
-  background-color: #cecece;
+  color: #fff !important;
+  background-color: #FD8A8A;
   user-select: none;
+  border-radius: 3px;
 }
 
 /* right */
@@ -173,7 +176,9 @@ body {
   padding: 20px;
 }
 
-
+.rightside ul li{
+  padding: 2px 0;
+}
 
 @media screen and (max-width: 900px) {
   #app {
@@ -181,23 +186,31 @@ body {
     width: 100vw;
   }
 
-  .leftside{
+  .leftside {
     width: 100%;
     padding: 10px;
   }
-  
+
   .shapes img {
     width: 100%;
   }
 
   .input {
-    margin: 5px;
+    width: 45%;
+    margin: 2px;
     background-color: #fff;
     border-radius: 0.5em;
     border: 1px solid #dcdfe6;
-    padding: 5px;
+    padding: 2px;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+  }
+}
+
+@media screen and(max-width: 600px) {
+  .input label{
+    font-size: 12px;
+    width: 60px;
   }
 }

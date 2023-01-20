@@ -20,7 +20,7 @@
       </div>
 
       <div class="counts">
-        <div class="input" v-for="(item,index) in shapes" ::key="index">
+        <div class="input" v-for="(item,index) in shapes" :key="index">
           <label>{{item.name}}:</label>
           <span @click="decrease(item)">-</span>
           <div style="margin: 0 10px;">{{item.count}}</div>
@@ -32,7 +32,7 @@
 
 
     <div class="rightside">
-      <span>当前已选择形状能拼好的数量：{{possibleNum}}</span>
+      <span>当前已选择方糖匹配的方案数量：{{possibleNum}}</span>
       <br>
       <button @click="show">
         show
