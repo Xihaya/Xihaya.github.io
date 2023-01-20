@@ -4,19 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maxminscale=1.0">
-  <title>Title</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>自动拼糖</title>
   <script src="./js/useData.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
   <link rel="stylesheet" type="text/css" href="./styles/base.css">
   <link rel="stylesheet" type="text/css" href="./styles/index.css">
+  <link rel="shortcut icon" href="./assets/52utils_favicon.ico" />
 </head>
 
 <body>
   <div id="app">
     <div class="leftside">
       <div class="shapes">
-        <img src="./方糖形状参照表.png" alt="">
+        <img src="./assets/方糖形状参照表.png" alt="">
       </div>
 
       <div class="counts">
@@ -58,7 +62,7 @@
         shapes: [],
         possibleArr: [],
         showPossibleArr: false,
-        interimArr:[]
+        interimArr: []
       }
     },
     beforeMount() {
@@ -68,12 +72,12 @@
       }
     },
     methods: {
-      show(){
-        if(this.possibleArr.length > 10000) return;
+      show() {
+        if (this.possibleArr.length > 10000) return;
         this.showPossibleArr = true;
         this.interimArr = this.possibleArr;
       },
-      filterUseData: _.debounce(function() {
+      filterUseData: _.debounce(function () {
         let interimArr = [];
         this.shapes.forEach(shape => {
           if (shape.count > 0) {
@@ -81,7 +85,7 @@
           }
         })
         this.possibleArr = interimArr;
-      },600),
+      }, 600),
       increase(shape) {
         if (this.selectedShapesNum() >= 9) {
           return
@@ -92,7 +96,7 @@
       decrease(shape) {
         if (this.selectedShapesNum() <= 0) {
           return
-        } else if(shape.count > 0) {
+        } else if (shape.count > 0) {
           shape.count--;
         }
       },
