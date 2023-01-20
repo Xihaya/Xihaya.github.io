@@ -41,8 +41,11 @@
       <button @click="show">
         show
       </button>
-      <button @click="showPossibleArr = false" style="margin: 30px;">
+      <button @click="showPossibleArr = false">
         close
+      </button>
+      <button @click="reset">
+        重置
       </button>
 
       <ul v-show="showPossibleArr">
@@ -67,11 +70,21 @@
     },
     beforeMount() {
       // 初始化
-      for (let i = 1; i <= 19; i++) {
-        this.shapes.push({ name: `形状${i}`, count: 0, desc: i + '' })
-      }
+      this.init();
     },
     methods: {
+      init() {
+        for (let i = 1; i <= 19; i++) {
+          this.shapes.push({ name: `形状${i}`, count: 0, desc: i + '' })
+        }
+      },
+      reset() {
+        this.shapes= [];
+        this.possibleArr= [];
+        this.showPossibleArr= false;
+        this.interimArr= [];
+        this.init();
+      },
       show() {
         if (this.possibleArr.length > 10000) return;
         this.showPossibleArr = true;

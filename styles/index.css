@@ -57,7 +57,7 @@ body {
   height: 100%;
   text-align: center;
   color: #fff !important;
-  background-color: #FD8A8A;
+  background-color: #fd8a8a;
   user-select: none;
   border-radius: 3px;
 }
@@ -69,7 +69,7 @@ body {
 
 .rightside button,
 .rightside button::after {
-  margin-top: 20px;
+  margin: 20px;
   padding: 16px 20px;
   font-size: 18px;
   background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
@@ -176,8 +176,24 @@ body {
   padding: 20px;
 }
 
-.rightside ul li{
+.rightside ul li {
   padding: 2px 0;
+}
+
+@media screen and (max-width: 600px) {
+  .input label {
+    font-size: 12px;
+    width: 60px;
+  }
+
+  .rightside{
+    padding: 10px;
+  }
+
+  .rightside button,
+  .rightside button::after {
+    margin: 10px !important;
+  }
 }
 
 @media screen and (max-width: 900px) {
@@ -205,12 +221,5 @@ body {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-  }
-}
-
-@media screen and(max-width: 600px) {
-  .input label{
-    font-size: 12px;
-    width: 60px;
   }
 }
