@@ -1,1 +1,198 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script src="./useData.js"></script><title>dlgd</title><script defer="defer" src="/js/chunk-vendors.087b6dd0.js"></script><script defer="defer" src="/js/app.1951fd07.js"></script><link href="/css/chunk-vendors.3724b088.css" rel="stylesheet"><link href="/css/app.3ed89b6a.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but dlgd doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="script-src 'self' https://api.example.com; object-src 'self'"
+    />
+    <title>录屏</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #171b21;
+        color: #fff;
+      }
+
+      #app {
+        padding: 5px;
+      }
+      span {
+        display: inline-block;
+        margin-right: 5px;
+      }
+      .topOptions,
+      .secondLineOptions {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+      }
+      .buff {
+        border: 1px solid transparent;
+        transition: all 0.3s linear;
+        color: #fff;
+        padding: 10px;
+        margin: 5px;
+        background: #354054;
+      }
+      .buff:hover {
+        border: 1px solid #fff;
+        background: #33496e;
+        border-radius: 1em;
+      }
+      .secondLineOptions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .secondLineOptions span {
+        width: 80px;
+      }
+      #ml,#ml_yp,#outputName {
+        padding: 5px 8px;
+        outline: none;
+        border-radius: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="topOptions">
+        <span>录制状态：</span><span id="status">无</span>
+        <button id="btn" class="buff">在线录屏</button>
+        <button id="btn2" class="buff">停止录屏</button>
+        <button id="btn3" class="buff">暂停录屏</button>
+        <button id="btn4" class="buff">继续录屏</button>
+      </div>
+      <div class="secondLineOptions">
+        <div>
+          <span>视频码率</span>
+          <input type="number" name="视频码率" id="ml" value="2500000" onchange="handleMLChange()" />
+        </div>
+        <div>
+          <span>音频码率</span>
+          <input type="number" name="音频码率" id="ml_yp" value="128000" onchange="handleYPMLChange()"/>
+        </div>
+        <div>
+            <span>输出文件名</span>
+            <input type="text" name="音频码率" id="outputName" value="output" />
+          </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var btn = document.querySelector("#btn");
+        var btn2 = document.querySelector("#btn2");
+        var btn3 = document.querySelector("#btn3");
+        var btn4 = document.querySelector("#btn4");
+        var status = document.querySelector("#status");
+        btn.addEventListener("click", function () {
+          startMediaRecorder(status);
+        });
+        btn2.addEventListener("click", function () {
+          stopMediaRecorder(status);
+        });
+        btn3.addEventListener("click", function () {
+          pauseMediaRecorder(status);
+        });
+        btn4.addEventListener("click", function () {
+          resumeMediaRecorder(status);
+        });
+      });
+      var mediaRecorder = null;
+      var options = {
+        audioBitsPerSecond: 128000,
+        videoBitsPerSecond: 2500000,
+        mimeType : 'video/webm;codecs=vp9',
+        videoName: 'output'
+      };
+      function startMediaRecorder(status) {
+        // 检查浏览器是否支持 getDisplayMedia API
+        if (
+          !navigator.mediaDevices ||
+          !navigator.mediaDevices.getDisplayMedia
+        ) {
+          console.log("Browser does not support screen capture");
+          return;
+        }
+
+        // 开始屏幕捕获
+        navigator.mediaDevices
+          .getDisplayMedia({ video: true })
+          .then((stream) => {
+            // 创建 MediaRecorder 实例
+            mediaRecorder = new MediaRecorder(stream, options);
+
+            // 用于存储录制的视频数据
+            let chunks = [];
+
+            // 当有数据可用时触发
+            mediaRecorder.ondataavailable = function (e) {
+              chunks.push(e.data);
+            };
+
+            // 开始录制
+            mediaRecorder.start();
+            status.innerHTML = "录制中...";
+
+            // 当停止录制时触发
+            mediaRecorder.onstop = function () {
+              // 创建 Blob 对象
+              const blob = new Blob(chunks, { type: "video/mp4" });
+
+              // 下载录制的视频
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style = "display: none";
+              a.href = url;
+              a.download =  options.videoName+".mp4";
+              a.click();
+              window.URL.revokeObjectURL(url);
+            };
+          })
+          .catch((err) => {
+            console.log("Unable to capture screen: ", err);
+          });
+      }
+
+      function stopMediaRecorder(status) {
+        if (mediaRecorder !== null) {
+          mediaRecorder.stop();
+          status.innerHTML = "无";
+          mediaRecorder = null;
+        }
+      }
+
+      function pauseMediaRecorder(status) {
+        if (mediaRecorder !== null && mediaRecorder.state !== "inactive") {
+          mediaRecorder.pause();
+          status.innerHTML = "暂停录制";
+        }
+      }
+
+      function resumeMediaRecorder(status) {
+        if (mediaRecorder !== null && mediaRecorder.state === "paused") {
+          mediaRecorder.resume();
+          status.innerHTML = "继续录制";
+        }
+      }
+
+      function handleMLChange() {
+        let ml = document.getElementById("ml").value;
+        options.videoBitsPerSecond = ml;
+      }
+      function handleYPMLChange() {
+        let ml = document.getElementById("ml_yp").value;
+        options.audioBitsPerSecond = ml;
+      }
+      function handleOutputName () {
+        let outputName = document.getElementById("outputName").value;
+        options.videoName = outputName;
+      }
+    </script>
+  </body>
+</html>
