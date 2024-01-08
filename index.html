@@ -53,9 +53,18 @@
         width: 80px;
       }
       #ml,#ml_yp,#outputName {
-        padding: 5px 8px;
+        margin-top: 10px;
+        padding: 8px 10px;
         outline: none;
-        border-radius: 1em;
+        border-radius: 10px;
+        background-color: #354054;
+        color: white;
+        border: 1px solid transparent;
+        transition: all 0.2s ease-in-out;
+
+        &:focus {
+          border: 1px solid #fff;
+        }
       }
     </style>
   </head>
